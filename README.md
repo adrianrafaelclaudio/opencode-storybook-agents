@@ -4,6 +4,8 @@ Suite reutilizable de agentes OpenCode para auditar, preparar, construir y valid
 Storybook en proyectos React. El flujo prioriza evidencia, contratos productivos
 mínimos, documentación viva, aislamiento de efectos y verificación independiente.
 
+**[Abrir el playground publicado](https://adrianrafaelclaudio.github.io/opencode-storybook-agents/)**
+
 ![Fundamentos documentados en Storybook](docs/images/storybook-foundations.png)
 
 ## Qué incluye
