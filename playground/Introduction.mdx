@@ -1,0 +1,49 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Foundations/Introduction" />
+
+<div className="docs-shell">
+  <span className="feature-eyebrow">Living documentation</span>
+  <h1>Build the system before you build the gallery.</h1>
+  <p>
+    Foundations explain the decisions shared by every component. They turn
+    color, typography and spacing from implicit CSS into reviewable evidence.
+  </p>
+  <h2>Color roles</h2>
+  <div className="token-grid">
+    <div className="token">
+      <div className="token-swatch" style={{ background: "#123c45" }} />
+      <div className="token-copy">
+        <strong>Deep teal</strong>
+        <code>--color-primary · actions</code>
+      </div>
+    </div>
+    <div className="token">
+      <div className="token-swatch" style={{ background: "#ecb96a" }} />
+      <div className="token-copy">
+        <strong>Warm amber</strong>
+        <code>--color-accent · emphasis</code>
+      </div>
+    </div>
+    <div className="token">
+      <div className="token-swatch" style={{ background: "#f4f0e8" }} />
+      <div className="token-copy">
+        <strong>Paper</strong>
+        <code>--color-canvas · surfaces</code>
+      </div>
+    </div>
+    <div className="token">
+      <div className="token-swatch" style={{ background: "#101827" }} />
+      <div className="token-copy">
+        <strong>Night</strong>
+        <code>--color-ink · dark context</code>
+      </div>
+    </div>
+  </div>
+  <h2>Review contract</h2>
+  <p>
+    Every responsive section should expose a desktop reference, a real mobile
+    viewport, relevant states and deterministic interactions. Documentation
+    describes limits instead of hiding them.
+  </p>
+</div>
