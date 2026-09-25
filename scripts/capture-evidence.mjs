@@ -11,32 +11,36 @@ const mime = {
   ".json": "application/json",
   ".svg": "image/svg+xml",
 };
-const server = createServer(async (request, response) => {
-  try {
-    const pathname = decodeURIComponent(
-      new URL(request.url ?? "/", "http://localhost").pathname,
-    );
-    let file = resolve(root, `.${pathname}`);
-    if (!file.startsWith(`${root}/`) && file !== root)
-      throw new Error("Invalid path");
-    if ((await stat(file)).isDirectory()) file = join(file, "index.html");
-    response.writeHead(200, {
-      "Content-Type": mime[extname(file)] ?? "application/octet-stream",
-    });
-    response.end(await readFile(file));
-  } catch {
-    response.writeHead(404);
-    response.end("Not found");
-  }
-});
+let server;
+let base = process.env.STORYBOOK_URL?.replace(/\/$/, "");
+if (!base) {
+  server = createServer(async (request, response) => {
+    try {
+      const pathname = decodeURIComponent(
+        new URL(request.url ?? "/", "http://localhost").pathname,
+      );
+      let file = resolve(root, `.${pathname}`);
+      if (!file.startsWith(`${root}/`) && file !== root)
+        throw new Error("Invalid path");
+      if ((await stat(file)).isDirectory()) file = join(file, "index.html");
+      response.writeHead(200, {
+        "Content-Type": mime[extname(file)] ?? "application/octet-stream",
+      });
+      response.end(await readFile(file));
+    } catch {
+      response.writeHead(404);
+      response.end("Not found");
+    }
+  });
 
-await new Promise((resolveReady) =>
-  server.listen(0, "127.0.0.1", resolveReady),
-);
-const address = server.address();
-if (!address || typeof address === "string")
-  throw new Error("Unable to start evidence server");
-const base = `http://127.0.0.1:${address.port}`;
+  await new Promise((resolveReady) =>
+    server.listen(0, "127.0.0.1", resolveReady),
+  );
+  const address = server.address();
+  if (!address || typeof address === "string")
+    throw new Error("Unable to start evidence server");
+  base = `http://127.0.0.1:${address.port}`;
+}
 const browser = await chromium.launch({
   executablePath: process.env.CHROME_BIN ?? "/usr/bin/google-chrome",
   headless: true,
@@ -67,9 +71,9 @@ try {
     "docs/images/storybook-responsive.png",
     { width: 1180, height: 1000 },
   );
-  console.log("Evidence captured in docs/images/");
+  console.log(`Evidence captured from ${base} in docs/images/`);
 } finally {
   await browser.close();
-  server.closeAllConnections();
-  server.close();
+  server?.closeAllConnections();
+  server?.close();
 }

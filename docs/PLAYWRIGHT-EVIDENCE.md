@@ -19,6 +19,12 @@ defecto usa el Chrome instalado en `/usr/bin/google-chrome`; puede cambiarse asÃ
 CHROME_BIN=/ruta/al/chrome npm run evidence
 ```
 
+Para capturar el Storybook ya desplegado en lugar del build local:
+
+```bash
+STORYBOOK_URL=https://usuario.github.io/repositorio npm run evidence
+```
+
 ```mermaid
 flowchart LR
     C[CSF + MDX] --> B[storybook build]
